@@ -37,6 +37,32 @@ python -m http.server 8765
 
 Open `http://localhost:8765`. Run both servers: the API on port 8000 and the frontend on port 8765. If you use VS Code Live Server on port 5500, its localhost origins are included in the default CORS list. If you change the frontend port, add its `http://localhost:<port>` and `http://127.0.0.1:<port>` origins to `CORS_ORIGINS`. The frontend API origin is the `API_BASE_URL` setting near the top of `microplastic-monitor/app.js`; edit it if the API runs at a different address. Frontend URL, session duration, and SMTP settings are configured in the backend environment.
 
+## Pull and push with Git
+
+These examples assume the GitHub remote is already configured as `origin` and the branch is named `main`. Run `git branch --show-current` if your branch has a different name, and substitute it for `main` below. Pull before starting work so your local copy includes the latest remote changes. The commands do not add `.env` or local databases; `.gitignore` excludes those files.
+
+### Windows PowerShell
+
+```powershell
+cd E:\microplastics\quantlite
+git pull --rebase origin main
+git add .gitignore .env.example README.md requirements.txt backend microplastic-monitor
+git commit -m "Describe your change"
+git push origin main
+```
+
+### Ubuntu terminal
+
+```bash
+cd /path/to/quantlite
+git pull --rebase origin main
+git add .gitignore .env.example README.md requirements.txt backend microplastic-monitor
+git commit -m "Describe your change"
+git push origin main
+```
+
+Replace `/path/to/quantlite` with the directory where you cloned the project. If Git reports a conflict during `pull --rebase`, resolve the listed files, run `git add <resolved-files>`, then `git rebase --continue` before pushing.
+
 ## Founder ownership, provisioning, MFA, and recovery
 
 Public registration creates customer accounts only. No request field, profile edit, or frontend route grants owner privileges. The internal `ADMIN` role represents verified founders and co-founders only and is enforced by backend authorization on every platform-wide endpoint. Customers can read and change only their own permitted data.
